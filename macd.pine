@@ -1,0 +1,13 @@
+//@version=5
+strategy("MACD Strategy", overlay=true)
+fastLength = input(12)
+slowlength = input(26)
+MACDLength = input(9)
+BASELINE = ta.ema(close, fastLength) - ta.ema(close, slowlength)
+SIGNAL = ta.ema(BASELINE, MACDLength)
+
+if (ta.crossover(source1 = SIGNAL, source2 = BASELINE))
+    strategy.entry("MACD LONG ENTRY", strategy.long, comment="MACD LONG ENTRY")
+if (ta.crossunder(source1 = SIGNAL, source2 = BASELINE))
+    strategy.entry("MACD SHORT ENTRY", strategy.short, comment="MACD SHORT ENTRY")
+    
