@@ -1,0 +1,27 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// REUSING THIS CODE: You are welcome to reuse this code without permission. Credits are appreciated.
+//@version=4
+//@author=alexgrover,️ for PineCoders
+
+// Computing FIR Filters Using Arrays [WMA Example]
+// This script provides a template for calculating FIR filters using arrays.
+// The calculation of the coefficients should be executed in line 18 (variable `w`).
+
+// PineCoders, Tools and ideas for all Pine coders: pinecoders.com
+
+study("Computing FIR Filters Using Arrays [WMA Example]",overlay=true)
+length = input(14),src = input(close)
+//----
+var b = array.new_float(0)
+if barstate.isfirst
+    for i = 0 to length-1
+        w = length-i
+        array.push(b,w)
+den = array.sum(b)
+//----
+sum = 0.
+for i = 0 to length-1
+    sum := sum + src[i]*array.get(b,i)
+filt = sum/den
+//----
+plot(filt,"Plot",#2157f3,2)

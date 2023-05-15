@@ -1,0 +1,15 @@
+//@version=5
+indicator("MACD")
+
+positive_up = input(#26A69A, "Above   Grow", group="Histogram", inline="Above")
+positive_down = input(#B2DFDB, "Fall", group="Histogram", inline="Above")
+negative_up = input(#FFCDD2, "Below Grow", group="Histogram", inline="Below")
+negative_down = input(#FF5252, "Fall", group="Histogram", inline="Below")
+
+[macdLine, signalLine, histLine] = ta.macd(close, 12, 26, 9)
+delta = macdLine - signalLine
+
+plot(macdLine, title = "Macd Line", color = color.red)
+plot(signalLine, title = "Signal Line", color = color.blue)
+// plot(histLine, title = "Histogram Line", color = color.purple, style = plot.style_histogram)
+plot(delta, title = "Delta Line", color = delta > 0 ? (delta > delta[1] ? positive_up : positive_down) : (delta > delta[1] ? negative_up : negative_down), style = plot.style_columns)
