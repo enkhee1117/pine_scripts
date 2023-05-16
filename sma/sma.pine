@@ -1,0 +1,29 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © Enkhuliral
+
+//@version=5
+indicator("Simple Moving averages 50 100 200", overlay = true)
+
+// Moving Averages:
+sma200 = ta.sma(close, 200)
+sma100 = ta.sma(close, 100)
+sma50 = ta.sma(close, 50)
+
+plot(sma50, "50 day", color = color.new(#e6e64c, 10), linewidth = 2)
+plot(sma100, "100 day", color = color.new(#c25017, 10), linewidth = 2)
+plot(sma200, "200 day", color = color.new(#09054d, 10), linewidth = 2)
+
+// Alert when Golden Cross and Death Cross:
+goldenCross = ta.crossover(sma50, sma200)
+deathCross = ta.crossunder(sma50, sma200)
+
+if goldenCross
+    alert("Golden Cross on price: " + str.tostring(close), alert.freq_once_per_bar)
+
+if deathCross
+    alert("Death Cross on price: " + str.tostring(close), alert.freq_once_per_bar)
+
+// plotchar(xUp, "xUp", "▲", location.top, size = size.tiny) 📈📉🚀🙈🚨🚦🕠🕤💰💲
+plotchar(goldenCross, "Golden Cross", char = "↗", location = location.belowbar,color = color.lime ,size = size.small)
+plotchar(deathCross, "Golden Cross", char = "↘", location = location.belowbar,color = color.fuchsia, size = size.small)
+
